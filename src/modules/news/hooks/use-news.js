@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useApi } from "src/hooks/use-api.jsx";
-import apis from "src/modules/news/api/api.js";
+import apis from "src/modules/news/api.js";
 
 export default function useNews(page, count) {
   const api = useApi(apis);

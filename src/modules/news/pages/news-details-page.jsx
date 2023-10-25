@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "@tanstack/react-router";
 import { useApi } from "src/hooks/use-api.jsx";
-import apis from "src/modules/news/api/api.js";
+import apis from "src/modules/news/api.js";
 
 function NewsDetailsPage() {
   const newsId = useMatch({
