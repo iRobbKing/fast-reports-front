@@ -1,9 +1,15 @@
 import { RootRoute, Router } from "@tanstack/react-router";
-import { newsRoutes } from "./modules/news/routes.js";
+import { createRoutes as createAdminRoutes } from "./modules/admin/routes.js";
+import { createRoutes as createNewsRoutes } from "./modules/news/routes.js";
 
-export const rootRoute = new RootRoute();
+export function createRouter({ api, queryClient }) {
+  const root = new RootRoute();
+  const context = { root, api, queryClient };
 
-export function createRouter() {
-  const routeTree = rootRoute.addChildren([newsRoutes]);
+  const routeTree = root.addChildren([
+    createAdminRoutes(context),
+    createNewsRoutes(context),
+  ]);
+
   return new Router({ routeTree });
 }

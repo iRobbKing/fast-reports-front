@@ -1,36 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
 import { useMatch } from "@tanstack/react-router";
-import { useApi } from "src/hooks/use-api.jsx";
-import apis from "src/modules/news/api.js";
+import { useNewsDetails } from "src/hooks/query/use-news.js";
 
 function NewsDetailsPage() {
   const newsId = useMatch({
     select: ({ params }) => params.newsId,
   });
 
-  const api = useApi(apis);
-
+  // TODO: router prefetch.
   const {
     isPending,
     isError,
     data: news,
-  } = useQuery({
-    queryKey: ["news", newsId],
-    queryFn: () => api.news.getById(newsId),
-  });
+    error,
+  } = useNewsDetails(newsId);
 
   if (isPending)
     return <div>Loading...</div>;
 
   if (isError)
-    return <div>Error occurred.</div>;
+    return <div>{error.toString()}</div>;
 
   return (
     <div>
       <h4>{news.title}</h4>
       <p>{news.content}</p>
-      <img src={news.image} alt="news image"/>
-      <div>{news.publishDate}</div>
+      <img src={news.imageUrl} alt="news image"/>
+      <div>{news.publishDate.toLocaleDateString()}</div>
     </div>
   );
 }
