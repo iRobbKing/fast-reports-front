@@ -7,9 +7,6 @@ import { ApiContext } from "src/hooks/use-api.js";
 import apis from "src/api.js";
 import "./index.css";
 
-// TODO: replace all inputs with buttons.
-// TODO: error handling in loaders.
-
 const queryClient = new QueryClient();
 const api = apis.http;
 const router = createRouter({ api, queryClient });
