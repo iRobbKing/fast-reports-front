@@ -1,36 +1,27 @@
-import usePagination from "src/hooks/use-pagination.js";
-import { useNewsList } from "src/hooks/query/use-news.js";
-
-const NEWS_PER_PAGE = 10;
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useCallback } from "react";
+import NewsList from "src/components/news-list.jsx";
+import NewsInfoRow from "src/modules/news/components/news-info-row.jsx";
 
 function NewsListPage() {
-  const pagination = usePagination();
+  const navigate = useNavigate({ from: "/news/list" });
 
-  const {
-    isPending,
-    isError,
-    isSuccess,
-    data: news,
-    error,
-  } = useNewsList({ pagination: { start: pagination.start, count: NEWS_PER_PAGE } });
+  const handleSelect = useCallback(({ id }) => {
+    navigate({ to: `/news/${id}` });
+  }, [navigate]);
 
-  if (isPending)
-    return <div>Loading...</div>;
-
-  if (isError)
-    return <div>{error.toString()}</div>;
-
-  const newsList = isSuccess && news.map((news) => (
-    <div key={news.id}>
-      <div>{news.title}</div>
-      <img src={news.imageUrl} alt="news image"/>
-      <div>{news.publishDate.toLocaleDateString()}</div>
-    </div>
-  ));
+  const infoRowMapper = useCallback((news) => (
+    <NewsInfoRow
+      key={news.id}
+      news={news}
+      onSelected={handleSelect}
+    />
+  ), [handleSelect]);
 
   return (
-    <div>
-      {newsList}
+    <div className="content box">
+      <Link to="/news">Back</Link>
+      <NewsList mapper={infoRowMapper}/>
     </div>
   );
 }

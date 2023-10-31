@@ -15,3 +15,10 @@ export function authGetAdminLoader({ api, queryClient }) {
     return await queryClient.ensureQueryData(query);
   };
 }
+
+export function isAuthenticatedGuard({ api, queryClient }) {
+  return async () => {
+    const query = authGetAdminQuery(api);
+    return await queryClient.ensureQueryData(query);
+  };
+}

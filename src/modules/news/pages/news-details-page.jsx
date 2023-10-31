@@ -1,31 +1,28 @@
-import { useMatch } from "@tanstack/react-router";
+import { Link, useMatch } from "@tanstack/react-router";
 import { useNewsDetails } from "src/hooks/query/use-news.js";
+import { toBase64EncodedImage, toDateTime } from "src/lib/strings.js";
 
 function NewsDetailsPage() {
   const newsId = useMatch({
     select: ({ params }) => params.newsId,
   });
 
-  // TODO: router prefetch.
-  const {
-    isPending,
-    isError,
-    data: news,
-    error,
-  } = useNewsDetails(newsId);
-
-  if (isPending)
-    return <div>Loading...</div>;
-
-  if (isError)
-    return <div>{error.toString()}</div>;
+  const { data: news } = useNewsDetails(newsId);
 
   return (
-    <div>
-      <h4>{news.title}</h4>
-      <p>{news.content}</p>
-      <img src={news.imageUrl} alt="news image"/>
-      <div>{news.publishDate.toLocaleDateString()}</div>
+    <div className="modal is-active">
+      <div className="modal-background"></div>
+      <div className="box modal-content">
+        <section className="section">
+          <h1 className="title">{news.title}</h1>
+        </section>
+        <Link to="/news/list">Back</Link>
+        <div>{news.content}</div>
+        <figure className="image is-128x128">
+          <img className="is-128x128" src={toBase64EncodedImage(news.image)} alt="news image"/>
+        </figure>
+        <div>{toDateTime(news.publishDate)}</div>
+      </div>
     </div>
   );
 }

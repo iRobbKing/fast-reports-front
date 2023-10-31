@@ -6,7 +6,7 @@ function EditorNewsUpdateCard({ news, onClosed }) {
   const updateMutation = useNewsUpdateMutation();
 
   function updateNews(updatedNews) {
-    // TODO: handle errors.
+    updatedNews.set("id", news.id);
     updateMutation.mutate(updatedNews);
   }
 
@@ -22,10 +22,11 @@ function EditorNewsUpdateCard({ news, onClosed }) {
 
 EditorNewsUpdateCard.propTypes = {
   news: PropTypes.shape({
-    title: PropTypes.string,
-    content: PropTypes.string,
-    imageUrl: PropTypes.string,
-    publishDate: PropTypes.instanceOf(Date),
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    publishDate: PropTypes.string.isRequired,
   }).isRequired,
   onClosed: PropTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useApi } from "src/hooks/use-api.js";
-import { newsDetailsQuery, newsKeys, newsListQuery } from "src/query/news.js";
+import { newsCountQuery, newsDetailsQuery, newsKeys, newsListQuery } from "src/query/news.js";
 
 export function useNewsList(meta) {
   const api = useApi();
@@ -11,6 +11,12 @@ export function useNewsList(meta) {
 export function useNewsDetails(id) {
   const api = useApi();
   const query = newsDetailsQuery(api, id);
+  return useQuery(query);
+}
+
+export function useNewsCount() {
+  const api = useApi();
+  const query = newsCountQuery(api);
   return useQuery(query);
 }
 

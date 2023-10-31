@@ -1,17 +1,19 @@
 import { Route } from "@tanstack/react-router";
-import { newsDetailsLoader, newsListLoader } from "src/query/news.js";
+import { newsCountLoader, newsDetailsLoader, newsListLoader } from "src/query/news.js";
 import NewsDetailsPage from "./pages/news-details-page.jsx";
 import NewsListPage from "./pages/news-list-page.jsx";
 import NewsRecentPage from "./pages/news-recent-page.jsx";
 
 export function createRoutes({ root, api, queryClient }) {
   const context = { api, queryClient };
+  const countLoader = newsCountLoader(context);
   const listLoader = newsListLoader(context);
   const detailsLoader = newsDetailsLoader(context);
 
   const newsRoute = new Route({
     getParentRoute: () => root,
     path: "/news",
+    loader: countLoader,
   });
 
   const detailRoute = new Route({

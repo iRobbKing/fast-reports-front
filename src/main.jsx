@@ -11,7 +11,7 @@ import "./index.css";
 // TODO: error handling in loaders.
 
 const queryClient = new QueryClient();
-const api = apis.fake;
+const api = apis.http;
 const router = createRouter({ api, queryClient });
 
 ReactDOM.createRoot(document.getElementById("root")).render(

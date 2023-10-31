@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useSignInMutation } from "src/hooks/query/use-auth.js";
 
 function AdminLoginPage() {
@@ -7,31 +7,37 @@ function AdminLoginPage() {
 
   function handleLogin(event) {
     event.preventDefault();
-    const { login, password } = event.target.elements;
-    signInMutation.mutate({ login: login.value, password: password.value }, {
+    const data = Object.fromEntries(new FormData(event.target).entries());
+    signInMutation.mutate(data, {
       onSuccess() {
         navigate({ to: "/admin/editor" });
       },
     });
   }
 
-  const errorMessage = signInMutation.isError && (
-    <div>Error: {signInMutation.error.toString()}</div>
-  );
-
   return (
-    <form onSubmit={handleLogin}>
-      <label>
-        <span>Login: </span>
-        <input type="text" name="login"/>
-      </label>
-      <label>
-        <span>Login: </span>
-        <input type="password" name="password"/>
-      </label>
-      {errorMessage}
-      <input type="submit"/>
-    </form>
+    <div className="modal is-active">
+      <Link to="/news">
+        <div className="modal-background"></div>
+      </Link>
+      <div className="box modal-content">
+        <form onSubmit={handleLogin}>
+          <div className="field">
+            <label className="label">Login</label>
+            <div className="control">
+              <input className="input" type="text" name="login"/>
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Password</label>
+            <div className="control">
+              <input className="input" type="password" name="password"/>
+            </div>
+          </div>
+          <button className="button is-link" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
   );
 }
 

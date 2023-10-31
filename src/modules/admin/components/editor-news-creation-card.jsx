@@ -5,15 +5,10 @@ import EditorNewsCard from "src/modules/admin/components/editor-news-card.jsx";
 function EditorNewsCreationCard({ onClosed }) {
   const createMutation = useNewsCreateMutation();
 
-  function createNews(data) {
-    // TODO: handle errors.
-    createMutation.mutate(data);
-  }
-
   return (
     <EditorNewsCard
-      label="Update"
-      onSubmitted={createNews}
+      label="Create"
+      onSubmitted={createMutation.mutate}
       onClosed={onClosed}
     />
   );
