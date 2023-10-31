@@ -4,7 +4,8 @@ async function makeApiRequest(service, method, data = {}) {
   const request = toSnakeCase(data);
   const url = makeUrl(service, request.query ?? {});
   const body = makeBody(method, request.data);
-  const response = await fetch(url, { method, body, credentials: "include" });
+  const contentType = makeContentType(method, request.data);
+  const response = await fetch(url, { method, body, credentials: "include", headers: contentType });
   return await getResult(response);
 }
 
@@ -16,9 +17,14 @@ function makeUrl(service, query) {
 }
 
 function makeBody(method, data) {
-  if (!data || ["GET", "HEAD"].includes(data)) return null;
+  if (!data || ["GET", "HEAD"].includes(method)) return null;
   if (data instanceof FormData) return data;
   return JSON.stringify(data);
+}
+
+function makeContentType(method, data) {
+  if (!data || ["GET", "HEAD"].includes(method) || data instanceof FormData) return {};
+  return { "Content-Type": "application/json" };
 }
 
 async function getResult(response) {

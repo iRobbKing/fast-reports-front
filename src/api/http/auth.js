@@ -1,14 +1,14 @@
-export async function getAdmin() {
-  return { isAuthenticated: true };
+import makeApiRequest from "src/api/http/common/make-api-request.js";
+
+export async function isAuthenticated() {
+  return await makeApiRequest("/auth", "GET");
 }
 
-export async function signIn({ login, password }) {
-  if (login !== "admin" || password !== "admin")
-    throw new Error(`failed to log in`);
-
-  return null;
+export async function signIn(data) {
+  const result = await makeApiRequest("/auth/signIn", "POST", { data });
+  return !result?.message;
 }
 
 export async function signOut() {
-  return null;
+  await makeApiRequest("/auth/signOut", "POST");
 }

@@ -9,8 +9,8 @@ function AdminLoginPage() {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target).entries());
     signInMutation.mutate(data, {
-      onSuccess() {
-        navigate({ to: "/admin/editor" });
+      onSuccess(signedIn) {
+        if (signedIn) navigate({ to: "/admin/editor" });
       },
     });
   }
