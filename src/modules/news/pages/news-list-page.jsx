@@ -21,7 +21,7 @@ function NewsListPage() {
   return (
     <div className="content box">
       <Link to="/news">Back</Link>
-      <NewsList mapper={infoRowMapper}/>
+      <NewsList mapper={infoRowMapper} onlyPublished/>
     </div>
   );
 }

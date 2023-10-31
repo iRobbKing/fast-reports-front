@@ -12,7 +12,7 @@ async function makeApiRequest(service, method, data = {}) {
 function makeUrl(service, query) {
   const url = new URL(import.meta.env.VITE_BACKEND_URL + service);
   for (const [key, value] of Object.entries(query))
-    if (value) url.searchParams.set(key, value.toString());
+    if (value != null) url.searchParams.set(key, value?.toString());
   return url;
 }
 

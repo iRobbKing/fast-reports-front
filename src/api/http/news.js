@@ -1,8 +1,8 @@
 import makeApiRequest from "./common/make-api-request.js";
 
-export async function getAll({ filter, pagination = {} } = {}) {
+export async function getAll({ filter, onlyPublished, pagination = {} } = {}) {
   return await makeApiRequest("/news", "GET", {
-    query: { filter, ...pagination },
+    query: { onlyPublished, filter, ...pagination },
   });
 }
 

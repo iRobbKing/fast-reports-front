@@ -53,9 +53,9 @@ function NewsEditorPage() {
         <button className="button is-link m-1" onClick={handleSignOut}>Sign Out</button>
         <button className="button is-link m-1" onClick={handleReturn}>Back</button>
       </header>
-      <NewsList mapper={editorRowMapper}/>
+      <NewsList mapper={editorRowMapper} onlyPublished={false}/>
       <div className="control">
-        <button className="button is-link" onClick={handleCreationCardSelection}>Create New</button>
+        <button className="button is-link m-1" onClick={handleCreationCardSelection}>Create New</button>
       </div>
       {newsCard}
     </div>

@@ -8,7 +8,6 @@ function NewsInfoRow({ news, onSelected }) {
 
   return (
     <tr onClick={handleClick}>
-      <th>{news.id}</th>
       <td>{news.title}</td>
       <td>{news.content}</td>
       <td>{toDateTime(news.publishDate)}</td>

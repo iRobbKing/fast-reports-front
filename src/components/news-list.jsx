@@ -4,9 +4,10 @@ import { useNewsCount, useNewsList } from "src/hooks/query/use-news.js";
 import { NEWS_PREFETCH_COUNT } from "src/query/news.js";
 import NewsListPaginationBar from "src/components/news-list-pagination-bar.jsx";
 
-function NewsList({ mapper }) {
+function NewsList({ mapper, onlyPublished }) {
   const pagination = usePagination();
   const newsQuery = useNewsList({
+    onlyPublished,
     pagination: {
       start: pagination.page * NEWS_PREFETCH_COUNT,
       count: NEWS_PREFETCH_COUNT
@@ -15,7 +16,6 @@ function NewsList({ mapper }) {
   const newsCountQuery = useNewsCount();
 
   const rows = (newsQuery.data ?? []).map(mapper);
-
   const count = Math.ceil(parseInt(newsCountQuery.data ?? 1) / NEWS_PREFETCH_COUNT);
 
   return (
@@ -30,7 +30,6 @@ function NewsList({ mapper }) {
       <table className="table">
         <thead>
         <tr>
-          <th>Id</th>
           <th>Title</th>
           <th>Content</th>
           <th>Publish Date</th>
@@ -47,6 +46,7 @@ function NewsList({ mapper }) {
 
 NewsList.propTypes = {
   mapper: PropTypes.func.isRequired,
+  onlyPublished: PropTypes.bool.isRequired,
 };
 
 export default NewsList;
